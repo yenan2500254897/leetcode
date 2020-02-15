@@ -2,6 +2,8 @@ package middle.tree;
 
 import sun.rmi.server.InactiveGroupException;
 
+import java.math.BigInteger;
+
 /**
  * 1339. 分裂二叉树的最大乘积
  * 给你一棵二叉树，它的根为 root 。请你删除 1 条边，使二叉树分裂成两棵子树，且它们子树和的乘积尽可能大。
@@ -48,24 +50,35 @@ public class maxProduct {
       TreeNode(int x) { val = x; }
     }
 
-    private long calTotal(TreeNode root){
+    long total;
+    long maxMultiplyValue = Long.MIN_VALUE;
+
+    public int maxProduct(TreeNode root) {
+        total = calTotal(root);
+        //System.out.println("total:" + total);
+        dfs(root);
+        return (int)(maxMultiplyValue % 1000000007);
+    }
+
+    public long calTotal(TreeNode root){
+
         if(root == null){
             return 0;
         }
         return root.val + calTotal(root.left) + calTotal(root.right);
     }
 
-    public int maxProduct(TreeNode root) {
-        long total = calTotal(root);
-        return (int)(calSubTree(root, total)%1000000007);
-    }
-
-    private long calSubTree(TreeNode subRoot, long total) {
-        if (subRoot == null) {
+    public long dfs(TreeNode root){
+        if(root == null){
             return 0;
         }
-        long left = calTotal(subRoot.left);
-        long right = calTotal(subRoot.right);
-        return Math.max(left * (total - left), Math.max(right * (total - right), Math.max(calSubTree(subRoot.left, total), calSubTree(subRoot.right, total))));
+
+        long val = root.val + dfs(root.left) + dfs(root.right);
+        if(val * (total-val) > maxMultiplyValue){
+            //System.out.println("val:" + val * (total-val));
+            maxMultiplyValue = val * (total-val);
+        }
+
+        return val;
     }
 }
