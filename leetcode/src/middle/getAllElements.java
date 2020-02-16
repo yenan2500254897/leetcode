@@ -53,6 +53,7 @@ public class getAllElements {
     }
 
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+
         List<Integer> input1 = new ArrayList<>(10);
         List<Integer> input2 = new ArrayList<>(10);
         List<Integer> result1 = middleSearch(root1, input1);
