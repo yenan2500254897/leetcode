@@ -34,7 +34,7 @@ public class StrangePrinter {
     1.如果变的话，只用在 N[i+1][j] 加上 1
     2.如果不变的话，
      */
-    public int dp(String s, int i ,int j){
+    private int dp(String s, int i ,int j){
         if(i>j){
             return 0;
         }

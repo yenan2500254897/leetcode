@@ -75,7 +75,12 @@ public class SmallestSufficientTeam {
         for(int i=0;i<req_skills.length;i++){
             req.add(req_skills[i]);
         }
-        return temp.retainAll(req);
+        for(String item: req){
+            if(!temp.contains(item)){
+                return false;
+            }
+        }
+        return true;
    }
 
    int cal(List<Integer> record){
