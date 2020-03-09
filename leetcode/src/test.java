@@ -4,22 +4,24 @@ import java.util.Iterator;
 import java.util.List;
 
 public class test {
+    public void change(int[][] input){
+        input[0][1] = 1;
+    }
+    public void show(int[][] input){
+        for(int i=0;i<input.length;i++){
+            for(int j=0;j<input[0].length;j++){
+                System.out.print(" " +input[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
 
     public static void main(String[] args){
-        List<String> list = new ArrayList<>(2);
-        list.add("1");
-        list.add("2");
-
-        System.out.println(list);
-        Iterator iterator = list.iterator();
-        while (iterator.hasNext()){
-            String temp =(String)iterator.next();
-            if(temp.equals("1")){
-                iterator.remove();
-            }
-        }
-        System.out.println(list);
-
+        int[][] input = {{1,0},{0,1}};
+        test t=new test();
+        t.show(input);
+        t.change(input);
+        t.show(input);
         /*
         System.out.println(list);
         for(String item:list){
@@ -29,4 +31,5 @@ public class test {
         }
         System.out.println(list);*/
     }
+
 }
