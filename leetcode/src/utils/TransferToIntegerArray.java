@@ -82,25 +82,69 @@ public class TransferToIntegerArray {
         return result;
     }
 
+    public char[][] toTwoDimCharArray(String fileName) throws FileNotFoundException {
+        File inputFile = new File(fileName);
 
-    public void showTwoDimArray(int[][] input){
-        for(int[] item:input){
-            for(int i:item){
+        Scanner in = new Scanner(inputFile);
+        List<List<Character>> lists = new ArrayList<>();
+        String[] resultString = new String[0];
+        if (in.hasNext()){
+            String line = in.nextLine();
+            //System.out.println(line);
+            line = line.substring(1,line.length()-1);
+            //System.out.println(line);
+            resultString = line.split(splitWord);
+        }
+
+        List<Character> tempList = new ArrayList<>();
+        int width = 0;
+        for(String iter:resultString){
+            if(iter.contains("[")){
+                //System.out.println(iter.substring(1));
+                tempList.add(iter.substring(1).charAt(1));
+            }else if(iter.contains("]")){
+                //System.out.println(iter.substring(0,iter.length()-1));
+                tempList.add(iter.substring(0,iter.length()-1).charAt(1));
+                if(tempList.size() > width){
+                    width = tempList.size();
+                }
+                lists.add(new ArrayList<>(tempList));
+                tempList.clear();
+            }else {
+                tempList.add(iter.charAt(1));
+            }
+        }
+
+        int len = lists.size();
+        char[][] result = new char[len][width];
+        for(int i=0;i<len;i++){
+            for(int j=0;j<width;j++){
+                //System.out.println("i: " + i + " j：" + j + " value:" + lists.get(i).get(j));
+                result[i][j] = lists.get(i).get(j);
+            }
+        }
+
+        return result;
+    }
+
+    public void showTwoDimArray(long[][] input){
+        for(long[] item:input){
+            for(long i:item){
                 System.out.print(" " + i + " ");
             }
             System.out.println();
         }
     }
-    public static void main(String[] args){
-        String fileName = "test.txt";
-        TransferToIntegerArray transferToIntegerArray = new TransferToIntegerArray();
-        try{
-            //transferToIntegerArray.showOneDimArray(transferToIntegerArray.toOneDimArray(filePath + fileName));
-            transferToIntegerArray.showTwoDimArray(transferToIntegerArray.toTwoDimArray(filePath + fileName));
-        } catch (Exception e){
-            System.out.println(e);
-        }
-    }
+//    public static void main(String[] args){
+//        String fileName = "test.txt";
+//        TransferToIntegerArray transferToIntegerArray = new TransferToIntegerArray();
+//        try{
+//            //transferToIntegerArray.showOneDimArray(transferToIntegerArray.toOneDimArray(filePath + fileName));
+//            transferToIntegerArray.showTwoDimArray(transferToIntegerArray.toTwoDimArray(filePath + fileName));
+//        } catch (Exception e){
+//            System.out.println(e);
+//        }
+//    }
 
     public int[][] execute(){
         String fileName = "test.txt";
