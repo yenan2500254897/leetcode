@@ -46,9 +46,11 @@ public class MinIncrementForUniqueAchieve {
             }
         }
         int count = 0;
+        int index = 0;
         while (!queue.isEmpty()){
             int head = queue.poll();
-            int index = findFirstZero(record, head+1);
+            //index可以重复使用，加速查找
+            index = findFirstZero(record, Math.max(head+1, index));
             count += (index-head);
             record[index] = 1;
         }
