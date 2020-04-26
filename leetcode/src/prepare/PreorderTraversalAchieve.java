@@ -1,7 +1,6 @@
 package prepare;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class PreorderTraversalAchieve {
 
@@ -28,6 +27,35 @@ public class PreorderTraversalAchieve {
         if(root.right!=null){
             preorderTraversal(root.right);
         }
+        return list;
+    }
+
+    public List<Integer> preorderTraversalNonRecursive(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+
+        if(root==null){
+            return list;
+        }
+        stack.add(root);
+        Queue<TreeNode> queue = new ArrayDeque<>(4);
+        while (!stack.isEmpty()){
+            TreeNode head = stack.peek();
+            if(queue.isEmpty() || !queue.contains(head)){
+                list.add(head.val);
+                queue.add(head);
+            }
+
+
+            if(head.left !=null && !queue.contains(head.left)){
+                stack.add(head.left);
+            }else if(head.right != null && !queue.contains(head.right)){
+                stack.add(head.right);
+            }else {
+                stack.pop();
+                queue.add(head);
+            }
+        }
+
         return list;
     }
 }
