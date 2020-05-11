@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 public class MaximumSum {
 
+    //前缀和与后缀和
     public int maximumSum(int[] arr) {
 
         int len = arr.length;
@@ -14,39 +15,31 @@ public class MaximumSum {
             return arr[0];
         }
 
-        int[] noDelRecord = new int[len];
-        int[] hasDelRecord = new int[len];
+        int[] prefix = new int[len];
+        int[] suffix = new int[len];
 
         for(int i=0;i<len;i++){
             if(i==0){
-                noDelRecord[i] = arr[i];
+                prefix[i] = arr[i];
+                suffix[len-i-1] = arr[len-i-1];
                 continue;
             }
-            noDelRecord[i] = Math.max(noDelRecord[i-1]+arr[i], arr[i]);
+            prefix[i] = Math.max(prefix[i-1]+arr[i], arr[i]);
+            suffix[len-i-1] = Math.max(suffix[len-i] + arr[len-i-1], arr[len-i-1]);
         }
 
 
-        int[] copyOfNoDelRecord = Arrays.copyOfRange(noDelRecord, 0, len);
-        Arrays.sort(copyOfNoDelRecord);
-        int result = copyOfNoDelRecord[len-1];
-        if(copyOfNoDelRecord[0] == copyOfNoDelRecord[len-1]){
-            return result;
-        }
-
+        int result = Integer.MIN_VALUE;
         for(int i=0;i<len;i++){
-
-            for(int j=0;j<len;j++){
-                if(j<i){
-                    hasDelRecord[j] = noDelRecord[j];
-                }else if(i==j){
-                    hasDelRecord[j] = noDelRecord[j] - arr[j];
-                }else {
-                    hasDelRecord[j] = Math.max(hasDelRecord[j-1]+arr[j], arr[j]);
-                }
+            if(arr[i]<0){
+                int left = i==0?0:prefix[i-1];
+                int right = i==len-1?0:suffix[i+1];
+                result = Math.max(result, left+right);
             }
-            Arrays.sort(hasDelRecord);
-            result = Math.max(result, hasDelRecord[len-1]);
         }
+
+        Arrays.sort(prefix);
+        result = Math.max(prefix[len-1], result);
 
 
         return result;
