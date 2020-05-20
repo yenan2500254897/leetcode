@@ -64,11 +64,6 @@ public class Flatten {
             }
         }
 
-        Node test = head;
-        while (head!= null){
-            System.out.print(" " + head.val+ " ");
-            head = head.next;
-        }
         return head;
     }
 }
