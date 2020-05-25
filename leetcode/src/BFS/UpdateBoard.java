@@ -39,7 +39,9 @@ public class UpdateBoard {
             }
         };
 
+        //初始化
         queue.add(new Position(startR, startC));
+        //终止条件是queue为空
         while (!queue.isEmpty()){
             Position currentPos = queue.poll();
 
@@ -53,13 +55,16 @@ public class UpdateBoard {
                 break;
             }
 
+            //当前块是空白块
             if(ch == 'E'){
                 int count = findBump(currentPos, N, M,board);
                 board[currentR][currentC] = count == 0?'B':String.valueOf(count).charAt(0);
+                //如果周围有雷，则不挖该空白块周围块
                 if(count!=0){
                     continue;
                 }
 
+                //空白块周围没有雷
                 int nextR = 0;
                 int nextC = 0;
 
@@ -72,7 +77,7 @@ public class UpdateBoard {
                         Position nextPos = new Position(nextR, nextC);
                         int bumpCount = findBump(nextPos, N, M, board);
 
-                        //周围为无炸弹的未挖出的空白块
+                        //周围为无炸弹的未挖出的空白块，加入assistant
                         if(bumpCount == 0 ){
                             if(!assistant.contains(nextPos)){
                                 assistant.add(nextPos);
@@ -83,6 +88,7 @@ public class UpdateBoard {
                     }
                 }
 
+                //将下一轮的位置，放入queue中
                 if(queue.isEmpty()){
                     queue.addAll(assistant);
                     assistant.clear();
