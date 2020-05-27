@@ -63,7 +63,7 @@ public class FindLadders {
             return currentList;
         }
         for(String nextStr: similarList){
-            if(isValid(nextStr, currentWord) && reserveList.contains(nextStr)){
+            if(reserveList.contains(nextStr)){
                 System.out.println(" nextStr: " + nextStr);
                 currentList.add(nextStr);
                 reserveList.remove(nextStr);
